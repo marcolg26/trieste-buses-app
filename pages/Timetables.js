@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   Text,
-  ScrollView,
   FlatList,
   TouchableOpacity,
   StyleSheet,
   Linking,
 } from 'react-native';
+import { ScrollView } from 'react-native-virtualized-view';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -73,6 +73,7 @@ const Timetables = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.line}
         extraData={selectedId}
+        key={(item) => item.line}
       />
       <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
     </ScrollView>
