@@ -17,10 +17,12 @@ import ActionButton from '../components/ActionButton';
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity
     onPress={() => onPress(item.Url)}
-    style={[styles.item, { backgroundColor }]}>
+    style={[styles.item, { backgroundColor }]}
+    key = {item.Line}>
     <Text style={[styles.title, { color: textColor }]}>
       {item.Line + ' | ' + item.Route}
     </Text>
+   
   </TouchableOpacity>
 );
 

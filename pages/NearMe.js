@@ -21,7 +21,7 @@ const NearMe = ({ navigation }) => {
 
   function makeButton(data) {
     return (
-      <StopButton navigation={navigation} code={data.code} name={data.name} />
+      <StopButton navigation={navigation} code={data.code} name={data.name} key={data.code} />
     );
   }
 

@@ -15,7 +15,7 @@ const Starred = ({ navigation }) => {
 
   function makeButton(data) {
     //console.log(data);
-    return <StopButton navigation={navigation} code={data[0]} name={data[1]} />;
+    return <StopButton navigation={navigation} code={data[0]} name={data[1]} key={data[0]} />;
   }
 
   const getData = () => {
