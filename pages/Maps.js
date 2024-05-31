@@ -40,6 +40,7 @@ const Maps = ({ navigation }) => {
         return (
             <Marker
                 title={data.name}
+                key={data.code}
                 coordinate={{
                     latitude: data.latitude,
                     longitude: data.longitude,
@@ -63,14 +64,14 @@ const Maps = ({ navigation }) => {
             setLatitude(location.coords.latitude);
             setLongitude(location.coords.longitude);
 
-            const tokyoRegion = {
+            const currentRegion = {
                 latitude: latitude,
                 longitude: longitude,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01,
             };
 
-            mapRef.current.animateToRegion(tokyoRegion, 3 * 1000);
+            mapRef.current.animateToRegion(currentRegion, 3 * 1000);
             //placeMarkers();
 
         } catch (error) {
@@ -80,24 +81,29 @@ const Maps = ({ navigation }) => {
 
     const placeMarkers = async (location) => {
         if (location) getLocation();
-        const response = await fetch(
-            'https://marcolg.altervista.org/api/nearestjson.php?latitude=' +
-            latitude +
-            '&longitude=' +
-            longitude,
-            {
-                method: 'GET',
-                headers: {},
-            }
-        );
+        try {
+            const response = await fetch(
+                'https://marcolg.altervista.org/api/nearestjson.php?latitude=' +
+                latitude +
+                '&longitude=' +
+                longitude,
+                {
+                    method: 'GET',
+                    headers: {},
+                }
+            );
 
-        setjson(await response.json());
-        console.log('OK');
+            setjson(await response.json());
+            console.log('OK');
+        }
+        catch {
+            console.log('errore');
+        }
     };
 
     useEffect(() => {
         placeMarkers();
-      }, []);
+    }, []);
 
     return (
         <View style={styles.container}>

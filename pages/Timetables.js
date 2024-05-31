@@ -51,6 +51,7 @@ const Timetables = ({ navigation }) => {
 
     return (
       <Item
+        key={item.key}
         item={item}
         onPress={(url) => {
           Linking.openURL(url);
@@ -74,7 +75,6 @@ const Timetables = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.line}
         extraData={selectedId}
-        key={(item) => item.line}
       />
     </ScrollView>
   );

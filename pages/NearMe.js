@@ -51,19 +51,24 @@ const NearMe = ({ navigation }) => {
     getLocation();
     console.log('generate text ' + latitude);
 
-    const response = await fetch(
-      'https://marcolg.altervista.org/api/nearestjson.php?latitude=' +
-      latitude +
-      '&longitude=' +
-      longitude,
-      {
-        method: 'GET',
-        headers: {},
-      }
-    );
+    try {
+      const response = await fetch(
+        'https://marcolg.altervista.org/api/nearestjson.php?latitude=' +
+        latitude +
+        '&longitude=' +
+        longitude,
+        {
+          method: 'GET',
+          headers: {},
+        }
+      );
 
-    setjson(await response.json());
-    console.log('OK');
+      setjson(await response.json());
+      console.log('OK');
+    }
+    catch {
+      console.log('error');
+    }
   };
 
   useEffect(() => {
