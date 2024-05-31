@@ -74,9 +74,9 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.text}>Benvenuto</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
+        <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Vicino a me')}>
+            onPress={() => navigation.navigate('Mappa')}>
             <Text style={styles.buttonText}>Fermate nelle vicinanze</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -89,6 +89,7 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('Linee e orari')}>
             <Text style={styles.buttonText}>Linee e orari</Text>
           </TouchableOpacity>
+
         </View>
       </ScrollView>
     </View>
