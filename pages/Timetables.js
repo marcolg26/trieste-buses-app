@@ -18,11 +18,11 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity
     onPress={() => onPress(item.Url)}
     style={[styles.item, { backgroundColor }]}
-    key = {item.Line}>
+    key={item.Line}>
     <Text style={[styles.title, { color: textColor }]}>
       {item.Line + ' | ' + item.Route}
     </Text>
-   
+
   </TouchableOpacity>
 );
 
@@ -31,7 +31,7 @@ const Timetables = ({ navigation }) => {
   const [json1, setjson1] = useState([]);
 
   const generateText = async () => {
-    
+
     const response = await fetch(
       'https://marcolg.altervista.org/api/linesjson.php',
       {
@@ -68,6 +68,7 @@ const Timetables = ({ navigation }) => {
   return (
     <ScrollView>
       <Title text={'Linee presenti nel territorio'}></Title>
+      <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
       <FlatList
         data={json1}
         renderItem={renderItem}
@@ -75,7 +76,6 @@ const Timetables = ({ navigation }) => {
         extraData={selectedId}
         key={(item) => item.line}
       />
-      <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
     </ScrollView>
   );
 };

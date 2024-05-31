@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Alert,
+  View,
   TouchableOpacity,
 } from 'react-native';
 
@@ -43,20 +44,18 @@ const NearMe = ({ navigation }) => {
       //generateText();
     } catch (error) {
       console.error('Error requesting location permission:', error);
-    } finally {
-      generateText();
     }
   };
 
   const generateText = async () => {
-    //getLocation();
+    getLocation();
     console.log('generate text ' + latitude);
 
     const response = await fetch(
       'https://marcolg.altervista.org/api/nearestjson.php?latitude=' +
-        latitude +
-        '&longitude=' +
-        longitude,
+      latitude +
+      '&longitude=' +
+      longitude,
       {
         method: 'GET',
         headers: {},
@@ -68,23 +67,36 @@ const NearMe = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getLocation();
+    //getLocation();
     generateText();
   }, []);
 
   return (
     <ScrollView>
       <Title text="Fermate nelle vicinanze" />
-      {!isLocated && (
-        <TouchableOpacity color="#808080">
-          <Text>Carimento posizione...</Text>
-        </TouchableOpacity>
-      )}
-      {isLocated && <ActionButton onPress={() => generateText()} icon={'🔍'} />}
+      <View style={styles.buttonContainer}>
+        <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
+        {!isLocated && (
+          <TouchableOpacity color="#808080">
+            <Text>Carimento posizione...</Text>
+          </TouchableOpacity>
+        )}
+        {isLocated && <ActionButton onPress={() => generateText()} icon={'🔍'} />}
+
+      </View>
       {json1.map(makeButton, this)}
-      <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
+
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+  }
+});
 
 export default NearMe;

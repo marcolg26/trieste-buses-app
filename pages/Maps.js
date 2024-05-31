@@ -39,6 +39,7 @@ const Maps = ({ navigation }) => {
         let name = data.name;
         return (
             <Marker
+                title={data.name}
                 coordinate={{
                     latitude: data.latitude,
                     longitude: data.longitude,
@@ -93,6 +94,10 @@ const Maps = ({ navigation }) => {
         setjson(await response.json());
         console.log('OK');
     };
+
+    useEffect(() => {
+        placeMarkers();
+      }, []);
 
     return (
         <View style={styles.container}>

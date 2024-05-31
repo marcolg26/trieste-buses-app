@@ -33,8 +33,9 @@ const Starred = ({ navigation }) => {
   return (
     <ScrollView>
       <Text></Text>
-      {stops.map(makeButton, this)}
       <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
+      {stops.map(makeButton, this)}
+
     </ScrollView>
   );
 };

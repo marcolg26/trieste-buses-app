@@ -17,7 +17,7 @@ const Drawer = createDrawerNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator screenOptions={() => ({ unmountOnBlur: true })}>
+      <Drawer.Navigator backBehavior="history" screenOptions={() => ({ unmountOnBlur: true })} >
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Mappa" component={Maps} />
         <Drawer.Screen name="Elenco fermate" component={NearMe} />

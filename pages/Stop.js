@@ -27,8 +27,8 @@ const Stop = ({ navigation }, route2) => {
 
     const response = await fetch(
       'https://realtime.tplfvg.it/API/v1.0/polemonitor/mrcruns?StopCode=' +
-        route.params.code +
-        '&IsUrban=false',
+      route.params.code +
+      '&IsUrban=false',
       {
         method: 'GET',
         headers: {},
@@ -140,8 +140,13 @@ const Stop = ({ navigation }, route2) => {
 
   return (
     <ScrollView>
-      <View>
-        <Title text={route.params.name}></Title>
+
+      <Title text={route.params.name}></Title>
+      <View style={styles.buttonContainer}>
+        <ActionButton
+          onPress={() => navigation.goBack()}
+          icon={'⬅️'}
+        />
         {!starred && (
           <ActionButton
             onPress={() => save(route.params.code, route.params.name)}
@@ -180,10 +185,7 @@ const Stop = ({ navigation }, route2) => {
         })}
       </DataTable>
 
-      <ActionButton
-        onPress={() => navigation.goBack()}
-        icon={'⬅️'}
-      />
+
     </ScrollView>
   );
 };
@@ -196,6 +198,9 @@ const Stop = ({ navigation }, route2) => {
 const styles = StyleSheet.create({
   container: {
     padding: 6,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
   },
   tableHeader: {
     backgroundColor: '#008995',
