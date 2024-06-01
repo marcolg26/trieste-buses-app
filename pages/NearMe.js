@@ -18,7 +18,7 @@ const NearMe = ({ navigation }) => {
   const [isLocated, setLocated] = useState(false);
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
-  const [json1, setjson] = useState([]);
+  const [stops, setStops] = useState([]);
 
   function makeButton(data) {
     return (
@@ -41,13 +41,13 @@ const NearMe = ({ navigation }) => {
       setLatitude(location.coords.latitude);
       setLongitude(location.coords.longitude);
       setLocated(true);
-      //generateText();
+
     } catch (error) {
       console.error('Error requesting location permission:', error);
     }
   };
 
-  const generateText = async () => {
+  const loadStops = async () => {
     getLocation();
     console.log('generate text ' + latitude);
 
@@ -63,7 +63,7 @@ const NearMe = ({ navigation }) => {
         }
       );
 
-      setjson(await response.json());
+      setStops(await response.json());
       console.log('OK');
     }
     catch {
@@ -73,7 +73,7 @@ const NearMe = ({ navigation }) => {
 
   useEffect(() => {
     //getLocation();
-    generateText();
+    loadStops();
   }, []);
 
   return (
@@ -86,10 +86,10 @@ const NearMe = ({ navigation }) => {
             <Text>Carimento posizione...</Text>
           </TouchableOpacity>
         )}
-        {isLocated && <ActionButton onPress={() => generateText()} icon={'🔍'} />}
+        {isLocated && <ActionButton onPress={() => loadStops()} icon={'🔍'} />}
 
       </View>
-      {json1.map(makeButton, this)}
+      {stops.map(makeButton, this)}
 
     </ScrollView>
   );

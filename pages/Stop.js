@@ -20,9 +20,9 @@ const Stop = ({ navigation }, route2) => {
   const route = useRoute();
 
   const [starred, setStar] = useState(false);
-  const [json1, setjson1] = useState([]);
+  const [runs, setRuns] = useState([]);
 
-  const generateText = async () => {
+  const loadData = async () => {
     //console.log(route.params);
 
     const response = await fetch(
@@ -37,13 +37,11 @@ const Stop = ({ navigation }, route2) => {
 
     var json = [];
     json = await response.json();
-    //setjson1(json);
-    //setGeneratedText(json[1].Line);
 
     for (var i = 0; i < json.length; i++) {
       json[i].Line = json[i].Line.slice(1);
     }
-    setjson1(json);
+    setRuns(json);
   };
 
   const checkStar = async () => {
@@ -52,14 +50,10 @@ const Stop = ({ navigation }, route2) => {
     try {
       const stopsDB1 = await AsyncStorage.getItem('stop');
       stops1 = JSON.parse(stopsDB1);
-      //console.log('<- ' + stops1);
-
-      //console.log('check star ' + route.params.code);
 
       for (var i = 0; i < stops1.length; i++) {
         if (stops1[i][0] === route.params.code) {
           setStar(true);
-          //console.log('is starred!');
           break;
         }
       }
@@ -126,17 +120,9 @@ const Stop = ({ navigation }, route2) => {
   };
 
   useEffect(() => {
-    generateText();
+    loadData();
     checkStar();
   }, []);
-
-  /*
-        {!starred && (
-          <TouchableOpacity
-            onPress={() => save(route.params.code, route.params.name)}>
-            <Text>⭐ Aggiungi ai preferiti</Text>
-          </TouchableOpacity>
-        )}*/
 
   return (
     <ScrollView>
@@ -172,7 +158,7 @@ const Stop = ({ navigation }, route2) => {
             <Text style={styles.headerText}>Orario</Text>
           </DataTable.Title>
         </DataTable.Header>
-        {json1.map((line) => {
+        {runs.map((line) => {
           return (
             <DataTable.Row key={line.Line + line.Race}>
               <DataTable.Cell>{line.Line}</DataTable.Cell>
@@ -189,11 +175,6 @@ const Stop = ({ navigation }, route2) => {
     </ScrollView>
   );
 };
-
-/*<TouchableOpacity onPress={() => generateText}>
-        <Text>Aggiorna</Text>
-      </TouchableOpacity>
-*/
 
 const styles = StyleSheet.create({
   container: {

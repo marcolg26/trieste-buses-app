@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
     Text,
     ScrollView,
-    FlatList,
     TouchableOpacity,
     StyleSheet,
     Linking,
@@ -19,20 +18,18 @@ import { Marker } from 'react-native-maps';
 import Title from '../components/Title';
 import ActionButton from '../components/ActionButton';
 
-
-
 const Maps = ({ navigation }) => {
     const [latitude, setLatitude] = useState("45.6515");
     const [longitude, setLongitude] = useState("13.7802");
     const mapRef = useRef(null);
-    const [json1, setjson] = useState([]);
+    const [stops, setStops] = useState([]);
 
-    const [region, setRegion] = useState({
+    /*const [region, setRegion] = useState({
         latitude: 51.5079145,
         longitude: -0.0899163,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
-    });
+    });*/
 
     function makeMarker(data) {
         let code = data.code;
@@ -93,8 +90,8 @@ const Maps = ({ navigation }) => {
                 }
             );
 
-            setjson(await response.json());
-            console.log('OK');
+            setStops(await response.json());
+            console.log("ok");
         }
         catch {
             console.log('errore');
@@ -108,7 +105,7 @@ const Maps = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
-                <ActionButton onPress={() => navigation.navigate('Home')} icon={'🏠'} />
+                <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
                 <ActionButton onPress={() => placeMarkers(true)} icon={'📍'} />
                 <ActionButton onPress={() => navigation.navigate('Elenco fermate')} icon={'🔠'} />
             </View>
@@ -117,14 +114,14 @@ const Maps = ({ navigation }) => {
                 style={styles.map}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
-                onRegionChangeComplete={(region) => { setLatitude(region.latitude); setLongitude(region.longitude); placeMarkers(false) }}
+                onRegionChangeComplete={(region) => { setLatitude(region.latitude); setLongitude(region.longitude); console.log(region.longitudeDelta); placeMarkers(false) }}
                 initialRegion={{
                     latitude: latitude,
                     longitude: longitude,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
                 }} >
-                {json1.map(makeMarker, this)}
+                {stops.map(makeMarker, this)}
             </MapView>
         </View>
 

@@ -8,9 +8,6 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-virtualized-view';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
 import Title from '../components/Title';
 import ActionButton from '../components/ActionButton';
 
@@ -27,10 +24,9 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 );
 
 const Timetables = ({ navigation }) => {
-  const [selectedId, setSelectedId] = useState();
-  const [json1, setjson1] = useState([]);
+  const [lines, setLines] = useState([]);
 
-  const generateText = async () => {
+  const loadLines = async () => {
 
     const response = await fetch(
       'https://marcolg.altervista.org/api/linesjson.php',
@@ -40,9 +36,7 @@ const Timetables = ({ navigation }) => {
       }
     );
 
-    var json = [];
-    json = await response.json();
-    setjson1(json);
+    setLines(await response.json());
   };
 
   const renderItem = ({ item }) => {
@@ -63,7 +57,7 @@ const Timetables = ({ navigation }) => {
   };
 
   useEffect(() => {
-    generateText();
+    loadLines();
   }, []);
 
   return (
@@ -71,10 +65,9 @@ const Timetables = ({ navigation }) => {
       <Title text={'Linee presenti nel territorio'}></Title>
       <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
       <FlatList
-        data={json1}
+        data={lines}
         renderItem={renderItem}
         keyExtractor={(item) => item.line}
-        extraData={selectedId}
       />
     </ScrollView>
   );

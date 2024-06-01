@@ -1,7 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const StopButton = ({ name, code, navigation }) => (
   <View style={styles.header}>
