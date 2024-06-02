@@ -39,8 +39,8 @@ const Maps = ({ navigation }) => {
                 title={data.name}
                 key={data.code}
                 coordinate={{
-                    latitude: data.latitude,
-                    longitude: data.longitude,
+                    latitude: parseFloat(data.latitude),
+                    longitude: parseFloat(data.longitude),
                 }}
                 onPress={() => navigation.navigate('Informazioni fermata', { code, name })}
             />
@@ -62,8 +62,8 @@ const Maps = ({ navigation }) => {
             setLongitude(location.coords.longitude);
 
             const currentRegion = {
-                latitude: latitude,
-                longitude: longitude,
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude),
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01,
             };
@@ -116,8 +116,8 @@ const Maps = ({ navigation }) => {
                 showsMyLocationButton={true}
                 onRegionChangeComplete={(region) => { setLatitude(region.latitude); setLongitude(region.longitude); console.log(region.longitudeDelta); placeMarkers(false) }}
                 initialRegion={{
-                    latitude: latitude,
-                    longitude: longitude,
+                    latitude: parseFloat(latitude),
+                    longitude: parseFloat(longitude),
                     latitudeDelta: 0.01,
                     longitudeDelta: 0.01,
                 }} >
