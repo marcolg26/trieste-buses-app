@@ -23,9 +23,10 @@ const Starred = ({ navigation }) => {
     //stops = JSON.parse(await AsyncStorage.getItem('stop'));
     AsyncStorage.getItem('stop').then((stops1) => {
       const stops2 = JSON.parse(stops1);
-      stops2.shift();
-      stops2.shift();
+      //stops2.shift();
+      //stops2.shift();
       //console.log(stops2);
+      if(stops2 === null) stops2=[];
       setStops(stops2);
     });
   };

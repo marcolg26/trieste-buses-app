@@ -71,6 +71,11 @@ const Stop = ({ navigation }, route2) => {
       stops = JSON.parse(stopsDB);
       console.log('<- ' + stops);
 
+      if (stops === null) {
+        console.log('nessuna fermata inserita');
+        stops = [];
+      }
+
       let isSet = 0;
 
       for (var i = 0; i < stops.length; i++) {
@@ -93,7 +98,8 @@ const Stop = ({ navigation }, route2) => {
       setStar(true);
       alert('Fermata aggiunta ai preferiti');
     } catch (error) {
-      await AsyncStorage.setItem('stop', '["0","1"]');
+      //await AsyncStorage.setItem('stop', '["0","1"]');
+      //await AsyncStorage.setItem('stop', JSON.stringify(stops));
       console.log('Errore nel salvataggio dei dati:', error);
     }
   };
@@ -114,7 +120,6 @@ const Stop = ({ navigation }, route2) => {
       setStar(false);
       Alert.alert('Fermata rimossa', 'Fermata rimossa dai preferiti');
     } catch (error) {
-      //await AsyncStorage.setItem('stop', '["0","1"]');
       console.log('Errore nella rimozione dei dati:', error);
     }
   };
