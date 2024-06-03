@@ -11,6 +11,7 @@ import Stop from './pages/Stop';
 import Starred from './pages/Starred';
 import Timetables from './pages/Timetables';
 import Maps from './pages/Maps';
+import RunDetails from './pages/RunDetails';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,11 +20,32 @@ const App = () => {
     <NavigationContainer>
       <Drawer.Navigator backBehavior="history" screenOptions={() => ({ unmountOnBlur: true })} >
         <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Mappa" component={Maps} />
+        <Drawer.Screen name="Mappa" component={Maps}
+          options={{
+            headerLeft: () => (
+              <Button
+                onPress={() => { alert("ciao") }}
+                title="←"
+                color="green"
+              />
+            ),
+          }} />
         <Drawer.Screen name="Elenco fermate" component={NearMe} />
         <Drawer.Screen
           name="Informazioni fermata"
           component={Stop}
+          options={
+            ({ unmountOnBlur: true },
+            {
+              drawerItemStyle: {
+                display: 'none',
+              },
+            })
+          }
+        />
+        <Drawer.Screen
+          name="Dettagli corsa"
+          component={RunDetails}
           options={
             ({ unmountOnBlur: true },
             {

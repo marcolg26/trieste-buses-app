@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, ScrollView } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,7 +14,6 @@ const Starred = ({ navigation }) => {
   }, []);
 
   function makeButton(data) {
-    //console.log(data);
     return <StopButton navigation={navigation} code={data[0]} name={data[1]} key={data[0]} />;
   }
 
@@ -25,7 +24,6 @@ const Starred = ({ navigation }) => {
       const stops2 = JSON.parse(stops1);
       //stops2.shift();
       //stops2.shift();
-      //console.log(stops2);
       if(stops2 === null) stops2=[];
       setStops(stops2);
     });

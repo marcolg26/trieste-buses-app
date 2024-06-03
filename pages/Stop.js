@@ -16,14 +16,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Title from '../components/Title';
 import ActionButton from '../components/ActionButton';
 
-const Stop = ({ navigation }, route2) => {
+const Stop = ({ navigation }) => {
   const route = useRoute();
 
   const [starred, setStar] = useState(false);
   const [runs, setRuns] = useState([]);
 
   const loadData = async () => {
-    //console.log(route.params);
 
     const response = await fetch(
       'https://realtime.tplfvg.it/API/v1.0/polemonitor/mrcruns?StopCode=' +
@@ -79,7 +78,6 @@ const Stop = ({ navigation }, route2) => {
       let isSet = 0;
 
       for (var i = 0; i < stops.length; i++) {
-        //console.log(stops[i][0]);
         if (stops[i][0] === code) isSet = 1;
       }
 
@@ -91,12 +89,9 @@ const Stop = ({ navigation }, route2) => {
         console.log('inserimento fermata');
       } else console.log('fermata già selezionata');
 
-      //console.log('stopsDB');
-      //console.log(stops);
-
       await AsyncStorage.setItem('stop', JSON.stringify(stops));
       setStar(true);
-      alert('Fermata aggiunta ai preferiti');
+      Alert.alert('Fermata aggiunta', 'Fermata aggiunta ai preferiti');
     } catch (error) {
       //await AsyncStorage.setItem('stop', '["0","1"]');
       //await AsyncStorage.setItem('stop', JSON.stringify(stops));
@@ -114,7 +109,6 @@ const Stop = ({ navigation }, route2) => {
       var stopsDeleted = stops.filter(function (item) {
         return item[0] != code;
       });
-      //console.log(stopsDeleted);
 
       await AsyncStorage.setItem('stop', JSON.stringify(stopsDeleted));
       setStar(false);
@@ -165,7 +159,7 @@ const Stop = ({ navigation }, route2) => {
         </DataTable.Header>
         {runs.map((line) => {
           return (
-            <DataTable.Row key={line.Line + line.Race}>
+            <DataTable.Row key={line.Line + line.Race} onPress={() => navigation.navigate('Dettagli corsa', {line})}>
               <DataTable.Cell>{line.Line}</DataTable.Cell>
               <DataTable.Cell style={styles.cell}>
                 {line.Destination}

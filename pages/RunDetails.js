@@ -12,24 +12,27 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import * as Location from 'expo-location';
-import MapView from "react-native-maps";
+import MapView, { Polyline } from "react-native-maps";
 import { Marker } from 'react-native-maps';
 
 import Title from '../components/Title';
 import ActionButton from '../components/ActionButton';
 
-const Maps = ({ navigation }) => {
+import { useRoute } from '@react-navigation/native';
+
+const RunDetails = ({ navigation }) => {
     const [latitude, setLatitude] = useState("45.6515");
     const [longitude, setLongitude] = useState("13.7802");
     const mapRef = useRef(null);
     const [stops, setStops] = useState([]);
+    const route = useRoute();
 
-    /*const [region, setRegion] = useState({
-        latitude: 51.5079145,
-        longitude: -0.0899163,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-    });*/
+    const [line, setLine] = useState();
+    const [race, setRace] = useState();
+    const [busLatitude, setbusLatitude] = useState("45.6515");
+    const [buslongitude, setBusLongitude] = useState("13.7802");
+
+    const [points, setPoints] = useState([]);
 
     function makeMarker(data) {
         let code = data.code;
@@ -45,76 +48,68 @@ const Maps = ({ navigation }) => {
                 onPress={() => navigation.navigate('Informazioni fermata', { code, name })}
             />
         );
-    }
-
-    const getLocation = async () => {
-        try {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-
-            if (status !== 'granted') {
-                setLocationError('Location permission denied');
-                return;
-            }
-
-            let location = await Location.getLastKnownPositionAsync({});
-            console.log(location.coords.latitude + ', ' + location.coords.longitude);
-            setLatitude(location.coords.latitude);
-            setLongitude(location.coords.longitude);
-
-            const currentRegion = {
-                latitude: parseFloat(latitude),
-                longitude: parseFloat(longitude),
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-            };
-
-            mapRef.current.animateToRegion(currentRegion, 3 * 1000);
-            //placeMarkers();
-
-        } catch (error) {
-            console.error('Error requesting location permission:', error);
-        }
     };
 
-    const placeMarkers = async (location) => {
-        if (location) getLocation();
+    const getPolyline = async () => {
+
         try {
             const response = await fetch(
-                'https://marcolg.altervista.org/api/nearestjson.php?latitude=' +
-                latitude +
-                '&longitude=' +
-                longitude,
+                'https://realtime.tplfvg.it/API/v1.0/polemonitor/linegeotrack?line=T' +
+                line +
+                '&race=' +
+                race,
                 {
                     method: 'GET',
                     headers: {},
                 }
             );
 
-            setStops(await response.json());
-            console.log("ok");
+            let json = await response.json();
+
+            var xx=[];
+
+            //console.log(json);
+            console.log(json.length)
+
+            var c=0;
+            for(var i = 0; i<json.length; i++){
+                for(var j = 0; j<json[i].length; j++){
+                    xx[c]={};
+                    xx[c]['latitude']=json[i][j][1];
+                    xx[c]['longitude']=json[i][j][0];
+                    c++;
+                }
+                console.log("***");
+            }
+
+            setPoints(xx);
+            //console.log(xx);
         }
-        catch {
-            console.log('errore');
+        catch(error) {
+            console.log(error);
         }
     };
 
+
     useEffect(() => {
-        placeMarkers();
+        console.log(route.params.line.Line + " " + route.params.line.Race);
+        setLine(route.params.line.Line);
+        setRace(route.params.line.Race);
+        setBusLongitude(route.params.line.Longitude);
+        setbusLatitude(route.params.line.Latitude);
     }, []);
 
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
                 <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
-                <ActionButton onPress={() => placeMarkers(true)} icon={'📍'} />
-                <ActionButton onPress={() => navigation.navigate('Elenco fermate')} icon={'🔠'} />
+                <ActionButton onPress={() => getPolyline()} icon={'📍'} />
             </View>
             <MapView
                 ref={mapRef}
                 style={styles.map}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
-                onRegionChangeComplete={(region) => { setLatitude(region.latitude); setLongitude(region.longitude); placeMarkers(false) }}
                 initialRegion={{
                     latitude: parseFloat(latitude),
                     longitude: parseFloat(longitude),
@@ -122,6 +117,18 @@ const Maps = ({ navigation }) => {
                     longitudeDelta: 0.01,
                 }} >
                 {stops.map(makeMarker, this)}
+                <Polyline
+                    coordinates={points}
+                    strokeColor="#008995"
+
+                    strokeWidth={3}
+                />
+                <Marker
+                coordinate={{
+                    latitude: parseFloat(busLatitude),
+                    longitude: parseFloat(buslongitude),
+                }}
+            />
             </MapView>
         </View>
 
@@ -140,4 +147,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Maps;
+export default RunDetails;
