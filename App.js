@@ -22,7 +22,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator backBehavior="history" screenOptions={() => ({ unmountOnBlur: true })} >
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Mappa" component={Maps}/>
+        <Stack.Screen name="Mappa" component={Maps} />
         <Stack.Screen name="Elenco fermate" component={NearMe} />
         <Stack.Screen
           name="Informazioni fermata"
@@ -33,6 +33,14 @@ const App = () => {
               drawerItemStyle: {
                 display: 'none',
               },
+            },
+            {
+              headerRight: () => (
+                <Button
+                  onPress={() => alert('This is a button!')}
+                  title="Info"
+                />
+              ),
             })
           }
         />

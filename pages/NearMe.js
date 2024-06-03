@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Alert,
   View,
+  Button,
   TouchableOpacity,
 } from 'react-native';
 
@@ -73,7 +74,17 @@ const NearMe = ({ navigation }) => {
 
   useEffect(() => {
     loadStops();
-  }, [latitude, longitude]);
+    navigation.setOptions({
+      headerRight: () => (
+        <View>
+          <Button
+            onPress={() => navigation.navigate('Mappa')}
+            title="Mappa"
+          />
+          </View>
+      ),
+    });
+  }, [latitude, longitude, navigation]);
 
   return (
     <ScrollView>

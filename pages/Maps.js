@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     Linking,
+    Button,
     View
 } from 'react-native';
 
@@ -100,12 +101,21 @@ const Maps = ({ navigation }) => {
 
     useEffect(() => {
         placeMarkers();
-    }, []);
+        navigation.setOptions({
+            headerRight: () => (
+              <View>
+                <Button
+                  onPress={() => navigation.navigate('Elenco fermate')}
+                  title="Elenco"
+                />
+                </View>
+            ),
+          });
+    }, [navigation]);
 
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
-                <ActionButton onPress={() => placeMarkers(true)} icon={'📍'} />
                 <ActionButton onPress={() => navigation.navigate('Elenco fermate')} icon={'🔠'} />
             </View>
             <MapView

@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Button,
   View,
   Alert,
 } from 'react-native';
@@ -121,25 +122,32 @@ const Stop = ({ navigation }) => {
   useEffect(() => {
     loadData();
     checkStar();
-  }, []);
+    navigation.setOptions({
+      headerRight: () => (
+        <View>
+        {!starred && (
+          <Button
+            onPress={() => save(route.params.code, route.params.name)}
+            title="Salva"
+          />
+        )}
+        {starred && (
+          <Button
+            onPress={() => remove(route.params.code)}
+            title="Rimuovi"
+          />
+        )}
+          </View>
+      ),
+    });
+  }, [navigation, starred, setStar, route]);
 
   return (
     <ScrollView>
 
       <Title text={route.params.name}></Title>
       <View style={styles.buttonContainer}>
-        {!starred && (
-          <ActionButton
-            onPress={() => save(route.params.code, route.params.name)}
-            icon={'⭐'}
-          />
-        )}
-        {starred && (
-          <ActionButton
-            onPress={() => remove(route.params.code)}
-            icon={'✖️'}
-          />
-        )}
+        
       </View>
       <DataTable style={styles.container}>
         <DataTable.Header style={styles.tableHeader}>
