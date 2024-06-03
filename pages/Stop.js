@@ -125,19 +125,19 @@ const Stop = ({ navigation }) => {
     navigation.setOptions({
       headerRight: () => (
         <View>
-        {!starred && (
-          <Button
-            onPress={() => save(route.params.code, route.params.name)}
-            title="Salva"
-          />
-        )}
-        {starred && (
-          <Button
-            onPress={() => remove(route.params.code)}
-            title="Rimuovi"
-          />
-        )}
-          </View>
+          {!starred && (
+            <Button
+              onPress={() => save(route.params.code, route.params.name)}
+              title="Salva"
+            />
+          )}
+          {starred && (
+            <Button
+              onPress={() => remove(route.params.code)}
+              title="Rimuovi"
+            />
+          )}
+        </View>
       ),
     });
   }, [navigation, starred, setStar, route]);
@@ -147,7 +147,7 @@ const Stop = ({ navigation }) => {
 
       <Title text={route.params.name}></Title>
       <View style={styles.buttonContainer}>
-        
+
       </View>
       <DataTable style={styles.container}>
         <DataTable.Header style={styles.tableHeader}>
@@ -163,7 +163,7 @@ const Stop = ({ navigation }) => {
         </DataTable.Header>
         {runs.map((line) => {
           return (
-            <DataTable.Row key={line.Line + line.Race} onPress={() => navigation.navigate('Dettagli corsa', {line})}>
+            <DataTable.Row key={line.Line + line.Race} onPress={() => navigation.navigate('Dettagli corsa', { line })}>
               <DataTable.Cell>{line.Line}</DataTable.Cell>
               <DataTable.Cell style={styles.cell}>
                 {line.Destination}

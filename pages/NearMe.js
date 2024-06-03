@@ -38,7 +38,6 @@ const NearMe = ({ navigation }) => {
 
       //let location = await Location.getCurrentPositionAsync({});
       let location = await Location.getLastKnownPositionAsync({});
-      console.log(location.coords.latitude + ', ' + location.coords.longitude);
       setLatitude(location.coords.latitude);
       setLongitude(location.coords.longitude);
       setLocated(true);
@@ -50,7 +49,6 @@ const NearMe = ({ navigation }) => {
 
   const loadStops = async () => {
     getLocation();
-    console.log('generate text ' + latitude);
 
     try {
       const response = await fetch(
@@ -65,7 +63,6 @@ const NearMe = ({ navigation }) => {
       );
 
       setStops(await response.json());
-      console.log('OK');
     }
     catch {
       console.log('error');
@@ -86,6 +83,7 @@ const NearMe = ({ navigation }) => {
     });
   }, [latitude, longitude, navigation]);
 
+  //{isLocated && <ActionButton onPress={() => loadStops()} icon={'🔍'} />}
   return (
     <ScrollView>
       <Title text="Fermate nelle vicinanze" />
@@ -95,7 +93,6 @@ const NearMe = ({ navigation }) => {
             <Text>Carimento posizione...</Text>
           </TouchableOpacity>
         )}
-        {isLocated && <ActionButton onPress={() => loadStops()} icon={'🔍'} />}
 
       </View>
       {stops.map(makeButton, this)}

@@ -8,9 +8,6 @@ import {
     View
 } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
 import * as Location from 'expo-location';
 import MapView, { Polyline } from "react-native-maps";
 import { Marker } from 'react-native-maps';

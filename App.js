@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, Button, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Text, Button } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';

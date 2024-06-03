@@ -9,9 +9,6 @@ import {
     View
 } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
 import * as Location from 'expo-location';
 import MapView from "react-native-maps";
 import { Marker } from 'react-native-maps';
@@ -111,12 +108,14 @@ const Maps = ({ navigation }) => {
                 </View>
             ),
           });
-    }, [navigation]);
+    }, [navigation, latitude, longitude, mapRef]);
+
+    //<ActionButton onPress={() => navigation.navigate('Elenco fermate')} icon={'🔠'} />
 
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
-                <ActionButton onPress={() => navigation.navigate('Elenco fermate')} icon={'🔠'} />
+                
             </View>
             <MapView
                 ref={mapRef}
