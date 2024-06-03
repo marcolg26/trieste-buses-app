@@ -72,9 +72,8 @@ const NearMe = ({ navigation }) => {
   };
 
   useEffect(() => {
-    //getLocation();
     loadStops();
-  }, []);
+  }, [latitude, longitude]);
 
   return (
     <ScrollView>

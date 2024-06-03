@@ -19,8 +19,10 @@ import Title from '../components/Title';
 import ActionButton from '../components/ActionButton';
 
 import { useRoute } from '@react-navigation/native';
+import Images from '../assets/Images';
 
 const RunDetails = ({ navigation }) => {
+    
     const [latitude, setLatitude] = useState("45.6515");
     const [longitude, setLongitude] = useState("13.7802");
     const mapRef = useRef(null);
@@ -52,6 +54,8 @@ const RunDetails = ({ navigation }) => {
 
     const getPolyline = async () => {
 
+        console.log("polyline");
+
         try {
             const response = await fetch(
                 'https://realtime.tplfvg.it/API/v1.0/polemonitor/linegeotrack?line=T' +
@@ -79,11 +83,9 @@ const RunDetails = ({ navigation }) => {
                     xx[c]['longitude']=json[i][j][0];
                     c++;
                 }
-                console.log("***");
             }
 
             setPoints(xx);
-            //console.log(xx);
         }
         catch(error) {
             console.log(error);
@@ -97,13 +99,13 @@ const RunDetails = ({ navigation }) => {
         setRace(route.params.line.Race);
         setBusLongitude(route.params.line.Longitude);
         setbusLatitude(route.params.line.Latitude);
-    }, []);
+        getPolyline();
+    }, [line, race]);
 
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
                 <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
-                <ActionButton onPress={() => getPolyline()} icon={'📍'} />
             </View>
             <MapView
                 ref={mapRef}
@@ -128,6 +130,8 @@ const RunDetails = ({ navigation }) => {
                     latitude: parseFloat(busLatitude),
                     longitude: parseFloat(buslongitude),
                 }}
+                image={Images.bus}
+            
             />
             </MapView>
         </View>
