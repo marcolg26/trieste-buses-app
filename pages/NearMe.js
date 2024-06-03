@@ -79,7 +79,6 @@ const NearMe = ({ navigation }) => {
     <ScrollView>
       <Title text="Fermate nelle vicinanze" />
       <View style={styles.buttonContainer}>
-        <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
         {!isLocated && (
           <TouchableOpacity color="#808080">
             <Text>Carimento posizione...</Text>

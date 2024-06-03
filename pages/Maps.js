@@ -105,7 +105,6 @@ const Maps = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
-                <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
                 <ActionButton onPress={() => placeMarkers(true)} icon={'📍'} />
                 <ActionButton onPress={() => navigation.navigate('Elenco fermate')} icon={'🔠'} />
             </View>

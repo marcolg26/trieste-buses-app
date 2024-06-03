@@ -54,8 +54,6 @@ const RunDetails = ({ navigation }) => {
 
     const getPolyline = async () => {
 
-        console.log("polyline");
-
         try {
             const response = await fetch(
                 'https://realtime.tplfvg.it/API/v1.0/polemonitor/linegeotrack?line=T' +
@@ -71,9 +69,6 @@ const RunDetails = ({ navigation }) => {
             let json = await response.json();
 
             var xx=[];
-
-            //console.log(json);
-            console.log(json.length)
 
             var c=0;
             for(var i = 0; i<json.length; i++){
@@ -94,7 +89,6 @@ const RunDetails = ({ navigation }) => {
 
 
     useEffect(() => {
-        console.log(route.params.line.Line + " " + route.params.line.Race);
         setLine(route.params.line.Line);
         setRace(route.params.line.Race);
         setBusLongitude(route.params.line.Longitude);
@@ -105,7 +99,6 @@ const RunDetails = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
-                <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
             </View>
             <MapView
                 ref={mapRef}

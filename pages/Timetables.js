@@ -63,7 +63,6 @@ const Timetables = ({ navigation }) => {
   return (
     <ScrollView>
       <Title text={'Linee presenti nel territorio'}></Title>
-      <ActionButton onPress={() => navigation.goBack()} icon={'⬅️'} />
       <FlatList
         data={lines}
         renderItem={renderItem}

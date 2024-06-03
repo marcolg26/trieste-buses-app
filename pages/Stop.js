@@ -128,10 +128,6 @@ const Stop = ({ navigation }) => {
 
       <Title text={route.params.name}></Title>
       <View style={styles.buttonContainer}>
-        <ActionButton
-          onPress={() => navigation.goBack()}
-          icon={'⬅️'}
-        />
         {!starred && (
           <ActionButton
             onPress={() => save(route.params.code, route.params.name)}

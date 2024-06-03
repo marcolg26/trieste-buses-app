@@ -3,6 +3,7 @@ import { View, Text, Button, ScrollView } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 
 
 import HomeScreen from './pages/HomeScreen';
@@ -14,24 +15,16 @@ import Maps from './pages/Maps';
 import RunDetails from './pages/RunDetails';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator backBehavior="history" screenOptions={() => ({ unmountOnBlur: true })} >
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Mappa" component={Maps}
-          options={{
-            headerLeft: () => (
-              <Button
-                onPress={() => { alert("ciao") }}
-                title="←"
-                color="green"
-              />
-            ),
-          }} />
-        <Drawer.Screen name="Elenco fermate" component={NearMe} />
-        <Drawer.Screen
+      <Stack.Navigator backBehavior="history" screenOptions={() => ({ unmountOnBlur: true })} >
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Mappa" component={Maps}/>
+        <Stack.Screen name="Elenco fermate" component={NearMe} />
+        <Stack.Screen
           name="Informazioni fermata"
           component={Stop}
           options={
@@ -43,7 +36,7 @@ const App = () => {
             })
           }
         />
-        <Drawer.Screen
+        <Stack.Screen
           name="Dettagli corsa"
           component={RunDetails}
           options={
@@ -55,13 +48,13 @@ const App = () => {
             })
           }
         />
-        <Drawer.Screen
+        <Stack.Screen
           name="Fermate preferite"
           component={Starred}
           options={{ unmountOnBlur: true }}
         />
-        <Drawer.Screen name="Linee e orari" component={Timetables} />
-      </Drawer.Navigator>
+        <Stack.Screen name="Linee e orari" component={Timetables} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
