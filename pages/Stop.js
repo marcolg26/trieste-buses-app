@@ -7,6 +7,7 @@ import {
   Button,
   View,
   Alert,
+  RefreshControl
 } from 'react-native';
 import { DataTable } from 'react-native-paper';
 
@@ -22,6 +23,16 @@ const Stop = ({ navigation }) => {
 
   const [starred, setStar] = useState(false);
   const [runs, setRuns] = useState([]);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    loadData();
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const loadData = async () => {
 
@@ -143,8 +154,12 @@ const Stop = ({ navigation }) => {
   }, [navigation, starred, setStar, route]);
 
   return (
-    <ScrollView>
+    <ScrollView
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
 
+     
       <Title text={route.params.name}></Title>
       <View style={styles.buttonContainer}>
 
