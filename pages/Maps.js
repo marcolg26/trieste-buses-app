@@ -13,14 +13,14 @@ import * as Location from 'expo-location';
 import MapView from "react-native-maps";
 import { Marker } from 'react-native-maps';
 
-import Title from '../components/Title';
-import ActionButton from '../components/ActionButton';
-
 const Maps = ({ navigation }) => {
-    const [latitude, setLatitude] = useState("45.6515");
-    const [longitude, setLongitude] = useState("13.7802");
+    const [latitude, setLatitude] = useState("45.6515"); //45.6515
+    const [longitude, setLongitude] = useState("13.7802"); //13.7802
+    const [initiallatitude, setinitialLatitude] = useState("45.6215"); //45.6515
+    const [initiallongitude, setinitialLongitude] = useState("13.7202"); //13.7802
     const mapRef = useRef(null);
     const [stops, setStops] = useState([]);
+    const [init, setInit] = React.useState(true);
 
     /*const [region, setRegion] = useState({
         latitude: 51.5079145,
@@ -46,6 +46,8 @@ const Maps = ({ navigation }) => {
     }
 
     const getLocation = async () => {
+
+        console.log("location")
         try {
             let { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -56,8 +58,11 @@ const Maps = ({ navigation }) => {
 
             let location = await Location.getLastKnownPositionAsync({});
             console.log(location.coords.latitude + ', ' + location.coords.longitude);
+            setinitialLatitude(location.coords.latitude);
+            setinitialLongitude(location.coords.longitude);
             setLatitude(location.coords.latitude);
             setLongitude(location.coords.longitude);
+
 
             const currentRegion = {
                 latitude: parseFloat(latitude),
@@ -66,7 +71,9 @@ const Maps = ({ navigation }) => {
                 longitudeDelta: 0.01,
             };
 
-            mapRef.current.animateToRegion(currentRegion, 3 * 1000);
+            if (init)
+                mapRef.current.animateToRegion(currentRegion, 3 * 1000);
+            setInit(false);
             //placeMarkers();
 
         } catch (error) {
@@ -74,8 +81,7 @@ const Maps = ({ navigation }) => {
         }
     };
 
-    const placeMarkers = async (location) => {
-        if (location) getLocation();
+    const placeMarkers = async () => {
         try {
             const response = await fetch(
                 'https://marcolg.altervista.org/api/nearestjson.php?latitude=' +
@@ -89,7 +95,7 @@ const Maps = ({ navigation }) => {
             );
 
             setStops(await response.json());
-            console.log("ok");
+            console.log("ok " + latitude + " " + longitude);
         }
         catch {
             console.log('errore');
@@ -97,35 +103,38 @@ const Maps = ({ navigation }) => {
     };
 
     useEffect(() => {
-        placeMarkers();
+
+        getLocation();
+        //placeMarkers();
+
         navigation.setOptions({
             headerRight: () => (
-              <View>
-                <Button
-                  onPress={() => navigation.navigate('Elenco fermate')}
-                  title="Elenco"
-                />
+                <View>
+                    <Button
+                        onPress={() => navigation.navigate('Elenco fermate')}
+                        title="Elenco"
+                    />
                 </View>
             ),
-          });
-    }, [navigation, latitude, longitude, mapRef]);
+        });
+    }, [navigation, initiallatitude, initiallongitude, init, setInit, mapRef, latitude, longitude]);
 
     //<ActionButton onPress={() => navigation.navigate('Elenco fermate')} icon={'🔠'} />
 
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
-                
+
             </View>
             <MapView
                 ref={mapRef}
                 style={styles.map}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
-                onRegionChangeComplete={(region) => { setLatitude(region.latitude); setLongitude(region.longitude); placeMarkers(false) }}
+                onRegionChangeComplete={(region) => { setLatitude(region.latitude); setLongitude(region.longitude); placeMarkers(); }}
                 initialRegion={{
-                    latitude: parseFloat(latitude),
-                    longitude: parseFloat(longitude),
+                    latitude: parseFloat(initiallatitude),
+                    longitude: parseFloat(initiallongitude),
                     latitudeDelta: 0.01,
                     longitudeDelta: 0.01,
                 }} >

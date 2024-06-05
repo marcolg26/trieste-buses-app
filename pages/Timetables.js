@@ -16,10 +16,11 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
     onPress={() => onPress(item.Url)}
     style={[styles.item, { backgroundColor }]}
     key={item.Line}>
+
     <Text style={[styles.title, { color: textColor }]}>
       {item.Line + ' | ' + item.Route}
     </Text>
-
+    
   </TouchableOpacity>
 );
 

@@ -63,21 +63,21 @@ const RunDetails = ({ navigation }) => {
                 }
             );
 
-            let json = await response.json();
+            let pointsJson = await response.json();
 
-            var xx=[];
+            var pointsTemp=[];
+            var count=0;
 
-            var c=0;
-            for(var i = 0; i<json.length; i++){
-                for(var j = 0; j<json[i].length; j++){
-                    xx[c]={};
-                    xx[c]['latitude']=json[i][j][1];
-                    xx[c]['longitude']=json[i][j][0];
-                    c++;
+            for(var i = 0; i<pointsJson.length; i++){
+                for(var j = 0; j<pointsJson[i].length; j++){
+                    pointsTemp[count]={};
+                    pointsTemp[count]['latitude']=pointsJson[i][j][1];
+                    pointsTemp[count]['longitude']=pointsJson[i][j][0];
+                    count++;
                 }
             }
 
-            setPoints(xx);
+            setPoints(pointsTemp);
         }
         catch(error) {
             console.log(error);
@@ -112,7 +112,6 @@ const RunDetails = ({ navigation }) => {
                 <Polyline
                     coordinates={points}
                     strokeColor="#008995"
-
                     strokeWidth={3}
                 />
                 <Marker

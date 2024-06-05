@@ -24,7 +24,7 @@ const Stop = ({ navigation }) => {
   const [starred, setStar] = useState(false);
   const [runs, setRuns] = useState([]);
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     loadData();
@@ -77,7 +77,6 @@ const Stop = ({ navigation }) => {
     console.log(code);
     var stops = [0];
     try {
-      //await AsyncStorage.setItem(code, "x");
       const stopsDB = await AsyncStorage.getItem('stop');
       stops = JSON.parse(stopsDB);
       console.log('<- ' + stops);
@@ -105,8 +104,7 @@ const Stop = ({ navigation }) => {
       setStar(true);
       Alert.alert('Fermata aggiunta', 'Fermata aggiunta ai preferiti');
     } catch (error) {
-      //await AsyncStorage.setItem('stop', '["0","1"]');
-      //await AsyncStorage.setItem('stop', JSON.stringify(stops));
+
       console.log('Errore nel salvataggio dei dati:', error);
     }
   };
@@ -114,7 +112,6 @@ const Stop = ({ navigation }) => {
   const remove = async (code) => {
     var stops = [0];
     try {
-      //await AsyncStorage.setItem(code, "x");
       const stopsDB = await AsyncStorage.getItem('stop');
       stops = JSON.parse(stopsDB);
 

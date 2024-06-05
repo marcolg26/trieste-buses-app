@@ -13,7 +13,7 @@ const Starred = ({ navigation }) => {
     getData();
   }, []);
 
-  function makeButton(data) {
+  function makeStopButton(data) {
     return <StopButton navigation={navigation} code={data[0]} name={data[1]} key={data[0]} />;
   }
 
@@ -22,17 +22,16 @@ const Starred = ({ navigation }) => {
     //stops = JSON.parse(await AsyncStorage.getItem('stop'));
     AsyncStorage.getItem('stop').then((stops1) => {
       const stops2 = JSON.parse(stops1);
-      //stops2.shift();
-      //stops2.shift();
       if(stops2 === null) stops2=[];
       setStops(stops2);
+      //console.log(JSON.stringify(stops));
     });
   };
 
   return (
     <ScrollView>
       <Text></Text>
-      {stops.map(makeButton, this)}
+      {stops.map(makeStopButton, this)}
 
     </ScrollView>
   );
