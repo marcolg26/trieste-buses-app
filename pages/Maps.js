@@ -12,22 +12,18 @@ import {
 import * as Location from 'expo-location';
 import MapView from "react-native-maps";
 import { Marker } from 'react-native-maps';
+import { useRoute } from '@react-navigation/native';
+
+import Title from '../components/Title';
 
 const Maps = ({ navigation }) => {
-    const [latitude, setLatitude] = useState("45.6515"); //45.6515
-    const [longitude, setLongitude] = useState("13.7802"); //13.7802
-    const [initiallatitude, setinitialLatitude] = useState("45.6215"); //45.6515
-    const [initiallongitude, setinitialLongitude] = useState("13.7202"); //13.7802
+    const [latitude, setLatitude] = useState("45.6515");
+    const [longitude, setLongitude] = useState("13.7802");
+    const [initiallatitude, setinitialLatitude] = useState("45.6505");
+    const [initiallongitude, setinitialLongitude] = useState("13.7622");
     const mapRef = useRef(null);
     const [stops, setStops] = useState([]);
     const [init, setInit] = React.useState(true);
-
-    /*const [region, setRegion] = useState({
-        latitude: 51.5079145,
-        longitude: -0.0899163,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-    });*/
 
     function makeMarker(data) {
         let code = data.code;
@@ -60,9 +56,6 @@ const Maps = ({ navigation }) => {
             console.log(location.coords.latitude + ', ' + location.coords.longitude);
             setinitialLatitude(location.coords.latitude);
             setinitialLongitude(location.coords.longitude);
-            setLatitude(location.coords.latitude);
-            setLongitude(location.coords.longitude);
-
 
             const currentRegion = {
                 latitude: parseFloat(latitude),
@@ -103,8 +96,7 @@ const Maps = ({ navigation }) => {
     };
 
     useEffect(() => {
-
-        getLocation();
+            getLocation();
         //placeMarkers();
 
         navigation.setOptions({
@@ -118,8 +110,6 @@ const Maps = ({ navigation }) => {
             ),
         });
     }, [navigation, initiallatitude, initiallongitude, init, setInit, mapRef, latitude, longitude]);
-
-    //<ActionButton onPress={() => navigation.navigate('Elenco fermate')} icon={'🔠'} />
 
     return (
         <View style={styles.container}>
