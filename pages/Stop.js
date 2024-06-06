@@ -16,7 +16,6 @@ import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Title from '../components/Title';
-import ActionButton from '../components/ActionButton';
 
 const Stop = ({ navigation }) => {
   const route = useRoute();

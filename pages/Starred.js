@@ -4,7 +4,6 @@ import { Text, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import StopButton from '../components/StopButton';
-import ActionButton from '../components/ActionButton';
 
 const Starred = ({ navigation }) => {
   const [stops, setStops] = useState([]);

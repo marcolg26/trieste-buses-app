@@ -11,7 +11,6 @@ import {
 
 import StopButton from '../components/StopButton';
 import Title from '../components/Title';
-import ActionButton from '../components/ActionButton';
 
 import * as Location from 'expo-location';
 

@@ -13,7 +13,6 @@ import MapView, { Polyline } from "react-native-maps";
 import { Marker } from 'react-native-maps';
 
 import Title from '../components/Title';
-import ActionButton from '../components/ActionButton';
 
 import { useRoute } from '@react-navigation/native';
 import Images from '../assets/Images';

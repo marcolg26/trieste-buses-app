@@ -9,7 +9,6 @@ import {
 import { ScrollView } from 'react-native-virtualized-view';
 
 import Title from '../components/Title';
-import ActionButton from '../components/ActionButton';
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity
@@ -20,7 +19,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
     <Text style={[styles.title, { color: textColor }]}>
       {item.Line + ' | ' + item.Route}
     </Text>
-    
+
   </TouchableOpacity>
 );
 
